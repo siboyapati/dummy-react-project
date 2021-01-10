@@ -237,3 +237,31 @@ export const GOOGLE_AUTH_LINK = "https://my-own-app.herokuapp.com/auth/google";
 ## Licence
 
 ### MIT
+
+
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://<username>:<password>@clusterboya.prmmd.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+
+mongo "mongodb+srv://clusterboya.prmmd.mongodb.net/<dbname>" --username <username>
+mongodb+srv://admin:admin@clusterboya.prmmd.mongodb.net/test
+mongodb+srv://admin:admin@clusterboya.prmmd.mongodb.net/<dbname>?retryWrites=true&w=majority
+
+
+
+  import "go.mongodb.org/mongo-driver/mongo"
+
+  ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+  defer cancel()
+  client, err := mongo.Connect(ctx, options.Client().ApplyURI(
+     "mongodb+srv://<username>:<password>@clusterboya.prmmd.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  ))
+  if err != nil { log.Fatal(err) }
+  
