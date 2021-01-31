@@ -2,6 +2,9 @@ import {
   GET_MESSAGES_LOADING,
   GET_MESSAGES_SUCCESS,
   GET_MESSAGES_FAIL,
+  GET_GEN_LOADING,
+  GET_GEN_SUCCESS,
+  GET_GEN_FAIL,
   ADD_MESSAGE_LOADING,
   ADD_MESSAGE_SUCCESS,
   ADD_MESSAGE_FAIL,
@@ -25,6 +28,11 @@ const initialState = {
 export default function (state = initialState, { type, payload }) {
   switch (type) {
     case GET_MESSAGES_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case GET_GEN_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -54,6 +62,12 @@ export default function (state = initialState, { type, payload }) {
         }),
       };
     case GET_MESSAGES_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        messages: payload.messages,
+      };
+    case GET_GEN_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -91,6 +105,12 @@ export default function (state = initialState, { type, payload }) {
         }),
       };
     case GET_MESSAGES_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload.error,
+      };
+    case GET_GEN_FAIL:
       return {
         ...state,
         isLoading: false,

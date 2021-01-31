@@ -5,6 +5,7 @@ import registerReducer from './registerReducer';
 import userReducer from './userReducer';
 import usersReducer from './usersReducer';
 import messageReducer from './messageReducer';
+import genReducer from './genReducer'
 
 export default combineReducers({
   auth: authReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   message: messageReducer,
   user: userReducer,
   users: usersReducer,
+  api: genReducer,
 });

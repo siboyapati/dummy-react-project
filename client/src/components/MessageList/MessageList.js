@@ -21,9 +21,9 @@ const MessageList = ({ getMessages, message: { messages, isLoading, error } }) =
           <Loader />
         ) : (
           <>
-            {messages.map((message, index) => {
+            {/* {messages.map((message, index) => {
               return <Message key={index} message={message} />;
-            })}
+            })} */}
           </>
         )}
       </div>
@@ -32,7 +32,7 @@ const MessageList = ({ getMessages, message: { messages, isLoading, error } }) =
 };
 
 const mapStateToProps = (state) => ({
-  message: state.message,
+  message: state.message || [],
 });
 
 export default connect(mapStateToProps, { getMessages })(MessageList);

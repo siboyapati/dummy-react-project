@@ -11,10 +11,9 @@ const Navbar = ({ auth, logOutUser, history }) => {
     event.preventDefault();
     logOutUser(history);
   };
-
   return (
     <nav className="navbar">
-      <h2 className="logo">MERN Boilerplate</h2>
+      <h2 className="logo">App</h2>
       <ul className="nav-links flex-1">
         <li className="nav-item">
           <Link to="/">Home</Link>
@@ -41,7 +40,6 @@ const Navbar = ({ auth, logOutUser, history }) => {
         ) : (
           <>
             <li className="flex-1" />
-
             <li className="nav-item">
               <Link to="/login">Login</Link>
             </li>

@@ -12,6 +12,13 @@ a {
   text-decoration: none;
 }
 
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 1.43;
+  color: #484848;
+}
+
 input,
 textarea,
 .btn {
@@ -22,7 +29,7 @@ textarea,
   margin: 5px 0;
   opacity: 0.85;
   display: inline-block;
-  font-size: 17px;
+  font-size: 1px;
   line-height: 20px;
   text-decoration: none;
   box-sizing: border-box;
