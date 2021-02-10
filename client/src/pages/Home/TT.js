@@ -53,9 +53,15 @@ function numberWithCommas(x) {
 }
 
 function currencyFormatter(number) {
-  number = number.toFixed(2);
+  // number = number.toFixed(2);
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(number);
 }
+
+
+function trimNumber(number){
+  return number.toFixed(2)
+}
+
 
 function Tables({ getGen, data, isLoading }) {
   useEffect(() => {
@@ -63,27 +69,11 @@ function Tables({ getGen, data, isLoading }) {
   }, []);
 
   const classes = useStyles();
-  var theme = useTheme();
   let ARKG = data.ARKG || [];
-  let cols = [];
   let d1 = [];
-  let k = currencyFormatter(500000);
+
   if (ARKG.length > 0) {
-    cols = Object.keys(ARKG[0].dailytransactions[0]);
     d1 = ARKG[0].dailytransactions;
-    d1 = d1.map((s) => {
-      let marketvalue = test(s.marketvalue),
-        // transactioncost = test(s.transactioncost),
-        totalshares = numberWithCommas(s.numberWithCommas),
-        sharechangepercentage = s.sharechangepercentage.toFixed(2);
-      return {
-        ...s,
-        marketvalue,
-        // transactioncost,
-        totalshares,
-        sharechangepercentage,
-      };
-    });
   }
 
   const columns = [
@@ -102,6 +92,20 @@ function Tables({ getGen, data, isLoading }) {
     {
       name: 'shares',
       label: 'Shares',
+      options: {
+        sortCompare: (shares) => {
+          debugger;
+          return (obj1, obj2) => {
+            // debugger;
+            // let val1 = parseInt(obj1.data, 10);
+            // let val2 = parseInt(obj2.data, 10);
+            return (obj1.data - obj2.data) * (shares === 'asc' ? 1 : -1);
+          };
+        },
+        customBodyRender: (cost) => {
+          return numberWithCommas(cost);
+        },
+      },
     },
     {
       name: 'transactioncost',
@@ -112,15 +116,11 @@ function Tables({ getGen, data, isLoading }) {
           return (obj1, obj2) => {
             console.log(transactioncost);
             console.log(obj1, obj2);
-            // debugger;
             // let val1 = parseInt(obj1.data, 10);
             // let val2 = parseInt(obj2.data, 10);
             return (obj1.data - obj2.data) * (transactioncost === 'asc' ? 1 : -1);
           };
         },
-        // sortCompare: (order) => ({ data: hobbyList1 }, { data: hobbyList2 }) =>
-        //   (hobbyList1.length - hobbyList2.length) * (order === 'asc' ? 1 : -1),
-        // hint: 'Sort by amount of hobbies',
         customBodyRender: (cost) => {
           return test(cost);
         },
@@ -143,20 +143,11 @@ function Tables({ getGen, data, isLoading }) {
         },
         hint: 'Sort by amount of hobbies',
         customBodyRender: (hobbies) => {
+          hobbies = trimNumber(hobbies) + "%"
           return <Chip label={hobbies} />;
         },
       },
     },
-    // {
-    //   name: 'Hobbies',
-    //   options: {
-    //     sortCompare: (order) => ({ data: hobbyList1 }, { data: hobbyList2 }) =>
-    //       (hobbyList1.length - hobbyList2.length) * (order === 'asc' ? 1 : -1),
-    //     hint: 'Sort by amount of hobbies',
-    //     customBodyRender: (hobbies) =>
-    //       hobbies.map((hobby, index) => <Chip key={index} label={hobby} />),
-    //   },
-    // },
   ];
 
   let options = {
@@ -165,18 +156,13 @@ function Tables({ getGen, data, isLoading }) {
     selectableRows: false,
     selectableRowsHeader: data.length > 0,
   };
-  // const theme1 = createMuiTheme({
-  //   palette: { type: 'dark' },
-  //   typography: { useNextVariants: true },
-  // });
+
   return (
     <>
       {d1.length && (
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            {/* <MuiThemeProvider> */}
             <MUIDataTable title="Employee List" data={d1} columns={columns} options={options} />
-            {/* </MuiThemeProvider> */}
           </Grid>
         </Grid>
       )}
